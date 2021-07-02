@@ -15,14 +15,38 @@ use App\Jobs\ReplyAttachmentAutomationJob;
 
 class RpaDashboard extends Component
 {
+    /**
+     * Loading indicator
+     *
+     * @var boolean
+     */
     protected $loading;
 
+    /**
+     * Images being displayed
+     *
+     * @var array
+     */
     protected $images;
 
+    /**
+     * Batch being executed
+     *
+     * @var Batch
+     */
     protected $batch;
 
+    /**
+     * Batch id
+     *
+     * @var string
+     */
     public $batchId;
 
+    /**
+     * Start executing batch
+     *
+     */
     public function start()
     {
         if ($this->batchId) {
@@ -50,6 +74,10 @@ class RpaDashboard extends Component
         return redirect("/$batch->id");
     }
 
+    /**
+     * Load new images by pulling
+     *
+     */
     public function loadImages()
     {
         if ($this->batchId) {
@@ -66,6 +94,10 @@ class RpaDashboard extends Component
         });
     }
 
+    /**
+     * Component hydratation
+     *
+     */
     public function mount()
     {
         if ($this->batchId) {
@@ -85,6 +117,10 @@ class RpaDashboard extends Component
         });
     }
 
+    /**
+     * Render component
+     *
+     */
     public function render()
     {
         return view('livewire.rpa-dashboard', [
