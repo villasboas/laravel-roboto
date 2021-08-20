@@ -420,12 +420,7 @@ class AccountAnalysisDemonstrativeReader implements FileReaderDriver
             ->values()
             ->toArray();
 
-            if ($result = $this->isDocumentHeading($data)) {
-                $this->output = array_merge($this->output, $result);
-                return;
-            }
-
-            if ($result = $this->isProviderHeading($data)) {
+            if ($result = $this->isDocumentHeading($data) || $result = $this->isProviderHeading($data)) {
                 $this->output = array_merge($this->output, $result);
                 return;
             }
@@ -433,22 +428,13 @@ class AccountAnalysisDemonstrativeReader implements FileReaderDriver
             if ($result = $this->isProtocolHeading($data)) {
                 $this->pushProtocol($result);
                 return;
-
             }
 
-            if ($result = $this->isGuideHeading($data)) {
-                $this->pushGuide($result);
-                return;
-
-            }
-
-            if ($result = $this->isGuideRecipient($data)) {
-                $this->pushGuide($result);
-                return;
-
-            }
-
-            if ($result = $this->isGuideStartBilling($data)) {
+            if (
+                $result = $this->isGuideHeading($data) ||
+                $result = $this->isGuideRecipient($data) ||
+                $result = $this->isGuideStartBilling($data)
+            ) {
                 $this->pushGuide($result);
                 return;
 
@@ -457,7 +443,6 @@ class AccountAnalysisDemonstrativeReader implements FileReaderDriver
             if ($result = $this->isGuideTableLine($data)) {
                 $this->pushTableLine($result);
                 return;
-
             }
 
             if ($result = $this->isGuideTotal($data)) {
